@@ -15,6 +15,13 @@ use FSC\P3PBundle\ResponseDecorator;
  */
 class Listener
 {
+    protected $responseDecorator;
+
+    public function __construct($responseDecorator)
+    {
+        $this->responseDecorator = $responseDecorator;
+    }
+
     /**
      * Add the P3P Header to the response if none is set.
      *
@@ -26,7 +33,6 @@ class Listener
             return;
         }
 
-        $responseDecorator = new ResponseDecorator();
-        $responseDecorator->decorate($event->getResponse());
+        $this->responseDecorator->decorate($event->getResponse());
     }
 }

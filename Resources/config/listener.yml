@@ -1,4 +1,7 @@
 parameters:
+    fsc.p3p.decorator.class: FSC\P3PBundle\ResponseDecorator
+    fsc.p3p.decorator.value: null
+    fsc.p3p.decorator.pattern: null
     fsc.p3p.listener.class: FSC\P3PBundle\EventListener\Listener
 
 services:
@@ -6,3 +9,9 @@ services:
         class: %fsc.p3p.listener.class%
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    fsc.p3p.decorator:
+        class: %fsc.p3p.decorator.class%
+        arguments:
+          - %fsc.p3p.decorator.value%
+          - %fsc.p3p.decorator.pattern%

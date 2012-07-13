@@ -15,6 +15,9 @@
         "php": ">=5.3",
         "symfony/framework-bundle": "2.*"
     },
+    "require-dev": {
+        "symfony/yaml": "2.*"
+    },
     "autoload":     {
         "psr-0": { "FSC\\P3PBundle": "" }
     },

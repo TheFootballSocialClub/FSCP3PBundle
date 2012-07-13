@@ -19,7 +19,13 @@ class FSCP3PExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('listener.yml');
+
+        $container->setParameter('fsc.p3p.decorator.value', $config['value']);
+        $container->setParameter('fsc.p3p.decorator.pattern', $config['pattern']);
     }
 }
