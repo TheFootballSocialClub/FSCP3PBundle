@@ -1,0 +1,21 @@
+{
+    "name": "fsc/p3p-bundle",
+    "description": "Bundle to add P3P headers to your responses.",
+    "keywords": ["symfony", "development", "bundle"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "The Football Social Club",
+            "email": "contact@thefootballsocialclub.com",
+            "homepage": "http://thefootballsocialclub.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload":     {
+        "psr-0": { "FSC\\P3PBundle": "" }
+    },
+    "target-dir": "FSC\\P3PBundle"
+}
