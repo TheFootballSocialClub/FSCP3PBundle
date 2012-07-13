@@ -1,0 +1,8 @@
+parameters:
+    fsc.p3p.listener.class: FSC\P3PBundle\EventListener\Listener
+
+services:
+    fsc.p3p.listener:
+        class: %fsc.p3p.listener.class%
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
