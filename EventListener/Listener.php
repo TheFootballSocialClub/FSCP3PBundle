@@ -6,6 +6,8 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+use FSC\P3PBundle\ResponseDecorator;
+
 /**
  * Listener
  *
@@ -24,9 +26,7 @@ class Listener
             return;
         }
 
-        $response = $event->getResponse(); /** @var $response Response */
-        if (!$response->headers->has('P3P')) {
-            $response->headers->set('P3P', 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
-        }
+        $responseDecorator = new ResponseDecorator();
+        $responseDecorator->decorate($event->getResponse());
     }
 }
