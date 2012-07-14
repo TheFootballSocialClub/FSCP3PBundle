@@ -21,13 +21,13 @@ class ResponseDecorator
         $this->pattern = $pattern ?: '//';
     }
 
-    public function decorate(Response $response, Request $request = null)
+    public function decorate(Response $response, Request $request)
     {
         if ($response->headers->has('P3P')) {
             return;
         }
 
-        if (null !== $request && !preg_match($this->pattern, $request->getPathInfo())) {
+        if (0 === preg_match($this->pattern, $request->getPathInfo())) {
             return;
         }
 

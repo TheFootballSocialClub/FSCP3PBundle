@@ -1,0 +1,12 @@
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+    secret: test
+    test: ~
+
+sensio_framework_extra:
+    router:  { annotations: true }
+
+fscp3_p:
+    value: "IDC DSP"
+    pattern: "#^/(?!admin)#"

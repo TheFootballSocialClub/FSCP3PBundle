@@ -15,7 +15,7 @@ class ResponseDecoratorTest extends \PHPUnit_Framework_Testcase
         $this->assertFalse($response->headers->has('P3P'));
 
         $decorator = new ResponseDecorator();
-        $decorator->decorate($response);
+        $decorator->decorate($response, $this->getRequestMock());
 
         $this->assertTrue($response->headers->has('P3P'));
     }
@@ -26,7 +26,7 @@ class ResponseDecoratorTest extends \PHPUnit_Framework_Testcase
         $response->headers->set('P3P', 'FOO');
 
         $decorator = new ResponseDecorator();
-        $decorator->decorate($response);
+        $decorator->decorate($response, $this->getRequestMock());
 
         $this->assertEquals('FOO', $response->headers->get('P3P'));
     }
@@ -36,7 +36,7 @@ class ResponseDecoratorTest extends \PHPUnit_Framework_Testcase
         $response = new Response();
 
         $decorator = new ResponseDecorator('FOO');
-        $decorator->decorate($response);
+        $decorator->decorate($response, $this->getRequestMock());
 
         $this->assertEquals('CP="FOO"', $response->headers->get('P3P'));
     }
@@ -46,15 +46,10 @@ class ResponseDecoratorTest extends \PHPUnit_Framework_Testcase
      */
     public function testDecorate4($requestPathInfo, $pattern, $shouldHaveHeader)
     {
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request', array('getPathInfo'));
-        $request->expects($this->once())
-            ->method('getPathInfo')
-            ->will($this->returnValue($requestPathInfo));
-
         $response = new Response();
 
         $decorator = new ResponseDecorator(null, $pattern);
-        $decorator->decorate($response, $request);
+        $decorator->decorate($response, $this->getRequestMock($requestPathInfo));
 
         $this->assertEquals($shouldHaveHeader, $response->headers->has('P3P'));
     }
@@ -93,7 +88,7 @@ class ResponseDecoratorTest extends \PHPUnit_Framework_Testcase
         $decorator = new ResponseDecorator('IDC DSP');
         $response = new Response();
 
-        $decorator->decorate($response);
+        $decorator->decorate($response, $this->getRequestMock());
 
         $this->assertEquals('CP="IDC DSP"', $response->headers->get('P3P'));
     }
@@ -103,8 +98,18 @@ class ResponseDecoratorTest extends \PHPUnit_Framework_Testcase
         $decorator = new ResponseDecorator();
         $response = new Response();
 
-        $decorator->decorate($response);
+        $decorator->decorate($response, $this->getRequestMock());
 
         $this->assertRegExp('/^CP="[^"]*"$/', $response->headers->get('P3P'));
+    }
+
+    protected function getRequestMock($requestPathInfo = '/')
+    {
+        $request = $this->getMock('Symfony\Component\HttpFoundation\Request', array('getPathInfo'));
+        $request->expects($this->any())
+            ->method('getPathInfo')
+            ->will($this->returnValue($requestPathInfo));
+
+        return $request;
     }
 }

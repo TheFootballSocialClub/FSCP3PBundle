@@ -33,6 +33,6 @@ class Listener
             return;
         }
 
-        $this->responseDecorator->decorate($event->getResponse());
+        $this->responseDecorator->decorate($event->getResponse(), $event->getRequest());
     }
 }
