@@ -27,6 +27,6 @@
     "autoload":     {
         "psr-0": { "FSC\\P3PBundle": "" }
     },
-    "target-dir": "FSC\\P3PBundle",
+    "target-dir": "FSC/P3PBundle",
     "minimum-stability": "dev"
 }
